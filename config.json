@@ -1,4 +1,3 @@
-sudo tee /usr/local/etc/xray/config.json > /dev/null <<'JSON'
 {
   "log": {
     "loglevel": "warning"
