@@ -10,25 +10,31 @@ server {
 
     ssl_certificate     /etc/letsencrypt/live/netcoder.xyz/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/netcoder.xyz/privkey.pem;
-
-    # Optional but recommended
     ssl_protocols TLSv1.2 TLSv1.3;
 
-    # A normal website response for /
+    # HTTP/2 + long-lived stream timeouts
+    http2_idle_timeout 5m;
+    client_header_timeout 1h;
+    client_body_timeout 1h;
+    send_timeout 1h;
+    keepalive_timeout 65;
+    keepalive_requests 100000;
+
     location / {
         return 200 "ok\n";
         add_header Content-Type text/plain;
     }
 
-    # VLESS gRPC endpoint (must match Xray serviceName)
-    location /grpc {
+    location ^~ /Tun {
         grpc_pass grpc://127.0.0.1:20000;
 
-        # gRPC requirements
         grpc_set_header Host $host;
         grpc_set_header X-Real-IP $remote_addr;
         grpc_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        grpc_read_timeout 3600s;
-        grpc_send_timeout 3600s;
+        grpc_set_header TE trailers;
+
+        grpc_connect_timeout 60s;
+        grpc_read_timeout 1h;
+        grpc_send_timeout 1h;
     }
 }
