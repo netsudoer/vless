@@ -1,3 +1,4 @@
+sudo tee /usr/local/etc/xray/config.json > /dev/null <<'JSON'
 {
   "log": {
     "loglevel": "warning"
@@ -10,7 +11,7 @@
       "settings": {
         "clients": [
           {
-            "id": "71cdd8d0-d894-4863-909b-7611b552a6c8",
+            "id": "0ea44678-fbb2-4679-81d1-d302d66e029c",
             "flow": "xtls-rprx-vision"
           }
         ],
@@ -26,9 +27,9 @@
           "serverNames": [
             "www.cloudflare.com"
           ],
-          "privateKey": "2LMkvv-3g1UhEFsxKhLc78U127HX69A52dqXTbrJ_Hk",
+          "privateKey": "EFBTRZbbGWXSHmtL17K1LyYScR4-HJKv733BIknkFn0",
           "shortIds": [
-            "70c2f708e4e814a8"
+            "58612e51d15a8fe9"
           ]
         }
       },
@@ -45,3 +46,4 @@
     { "protocol": "freedom" }
   ]
 }
+JSON
