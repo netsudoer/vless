@@ -1,0 +1,34 @@
+server {
+    listen 80;
+    server_name netcoder.xyz;
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+    server_name netcoder.xyz;
+
+    ssl_certificate     /etc/letsencrypt/live/netcoder.xyz/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/netcoder.xyz/privkey.pem;
+
+    # Optional but recommended
+    ssl_protocols TLSv1.2 TLSv1.3;
+
+    # A normal website response for /
+    location / {
+        return 200 "ok\n";
+        add_header Content-Type text/plain;
+    }
+
+    # VLESS gRPC endpoint (must match Xray serviceName)
+    location /grpc {
+        grpc_pass grpc://127.0.0.1:20000;
+
+        # gRPC requirements
+        grpc_set_header Host $host;
+        grpc_set_header X-Real-IP $remote_addr;
+        grpc_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        grpc_read_timeout 3600s;
+        grpc_send_timeout 3600s;
+    }
+}
