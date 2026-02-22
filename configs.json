@@ -6,12 +6,12 @@
   "inbounds": [
     {
       "listen": "127.0.0.1",
-      "port": 10000,
+      "port": 20000,
       "protocol": "vless",
       "settings": {
         "clients": [
           {
-            "id": "NEW-UUID-HERE"
+            "id": "f687142a-7427-46b9-85cf-d713e1889299"
           }
         ],
         "decryption": "none"
