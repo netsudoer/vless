@@ -1,7 +1,16 @@
 {
   "log": {
-    "loglevel": "warning"
+    "loglevel": "debug"
   },
+
+  "dns": {
+    "servers": [
+      "1.1.1.1",
+      "8.8.8.8"
+    ],
+    "queryStrategy": "UseIPv4"
+  },
+
   "inbounds": [
     {
       "listen": "127.0.0.1",
@@ -18,12 +27,14 @@
       },
       "streamSettings": {
         "network": "grpc",
+        "security": "none",
         "grpcSettings": {
-          "serviceName": "grpc"
+          "serviceName": "Tun"
         }
       }
     }
   ],
+
   "outbounds": [
     {
       "protocol": "freedom"
